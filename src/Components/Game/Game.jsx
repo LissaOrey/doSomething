@@ -1,8 +1,9 @@
 import React from 'react';
+import s from './Game.module.css';
 
 const Game =(props)=>{
    return(
-    <div>Game</div>
+    <div className={s.game}>Game</div>
    )
 }
 export default Game;
