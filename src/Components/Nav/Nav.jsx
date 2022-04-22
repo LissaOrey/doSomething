@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import s from './Nav.module.css';
 
-
 const Nav =(props)=>{
    return(
     <div className={s.nav}>

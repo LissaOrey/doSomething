@@ -16,6 +16,7 @@ function App() {
           <Route path='/' element={<Profile />}  />
           <Route path='users' element={<Users />}  />
           <Route path='game' element={<Game />}  />
+          <Route path="*" element={<div>Not found</div>} />
         </Routes>
       </div>
     </div>
