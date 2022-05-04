@@ -12,5 +12,17 @@ export const UsersAPI = {
         return instance.get(`users/?count=${pageSize}&page=${pageNumb}`).then(response=>{
             return response
         })
+    },
+    follow(userId){
+        return instance.post(`follow/${userId}`).then(response=>{
+            return response
+        })
+    }
+}
+export const ProfileAPI ={
+    getProfile(id){
+        return instance.get(`profile/${id}`).then(response=>{
+            return response
+        })
     }
 }

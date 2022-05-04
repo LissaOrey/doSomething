@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { UsersAPI } from '../../API-AXIOS/api';
-import {  changePageNumb, setUsers, setUsersCount } from '../../Redux/Slices/usersSlice';
+import {  setUsers, setUsersCount } from '../../Redux/Slices/usersSlice';
+import PageSlider from './PageSlider';
 import s from './Users.module.css';
 
 
@@ -9,23 +11,14 @@ import s from './Users.module.css';
 
 const Users =(props)=>{
 
+   const dispatch = useDispatch()
    const users = useSelector(state=>state.users.users);
-   const usersCount = useSelector(state=>state.users.usersCount);
    const pageSize = useSelector(state=>state.users.pageSize);
    const pageNumb = useSelector(state=>state.users.pageNumb);
    const userPhoto = useSelector(state=>state.users.userPhoto);
-   const dispatch = useDispatch()
-
-   let pageCount = Math.ceil(usersCount/pageSize);
-   let pages = [];
-   for (let i = 1; i <= pageCount; i++) {
-      pages[i-1]= {id: i, v: i}
-   }
    
+  //запрос на сервер за пользователями 
    useEffect(()=>{
-      // fetch('https://jsonplaceholder.typicode.com/users/')
-      //    .then(response => response.json())
-      //    .then(json => dispatch(setUsers(json)))
       // fetch(`https://social-network.samuraijs.com/api/1.0/users?count=${pageSize}&page=${pageNumb}`)
       // .then(response => response.json())
       // .then(json => { dispatch(setUsers(json.items)); dispatch(setUsersCount(json.totalCount))})
@@ -33,17 +26,23 @@ const Users =(props)=>{
          dispatch(setUsers(response.data.items));
          dispatch(setUsersCount(response.data.totalCount))
       })
+      
    },[dispatch, pageSize, pageNumb ])
-
-
+   useEffect(()=>{
+      // UsersAPI.follow(23660).then(response=>{
+      //    console.log(response)
+      // })
+   })
    return(
       <div className={s.usersBlock}>
-         <div className={s.pages}>
-         {pages.map(p=> <span className={Number(pageNumb)===p.v ? s.selectedPage : undefined} key={p.id} onClick={(e)=>dispatch(changePageNumb(e.currentTarget.innerText))} >{p.v}  </span>)}
-         </div>
+         <PageSlider  dispatch={dispatch} pageNumb={pageNumb} />
          <div className={s.users}>
          {users.map(u=><div className={s.user} key={u.id}>
+            <p>{u.id}</p>
+            <Link to={'/profile/'+u.id}>
             <img src={u.photos.small ? u.photos.small: userPhoto} alt='avatar' width={150}/>
+            </Link>
+            
             <span>{u.name} </span> <button>{u.followed ? 'отписаться' : 'подписаться'}</button> <br/>
             {u.status ? <p>status: {u.status}</p> : null}
          </div>)}
