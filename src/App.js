@@ -6,6 +6,7 @@ import Header from './Components/Header/Header';
 import Nav from './Components/Nav/Nav';
 import { Routes, Route } from 'react-router-dom';
 import Home from './Components/Home/Home';
+import Login from './Components/Login/Login';
 
 function App(props) {
   return (
@@ -22,6 +23,7 @@ function App(props) {
           </Route>
           <Route path='users' element={<Users />}  />
           <Route path='game' element={<Game />}  />
+          <Route path='login' element={<Login />}  />
           <Route path="*" element={<div>Not found</div>} />
         </Routes>
       </div>

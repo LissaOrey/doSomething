@@ -27,6 +27,7 @@ const usersSlice = createSlice({
     }
 
 })
+
 const { actions, reducer } = usersSlice;
 export const {addUser,setUsers, setUsersCount, changePageNumb} = actions;
 export default reducer;

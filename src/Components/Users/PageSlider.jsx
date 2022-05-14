@@ -12,7 +12,7 @@ const PageSlider = (props) => {
     let pagesLastIndex = pages.length-1;
 
 
-    let onClick=(func)=> {
+    const onClick=(func)=> {
         let pages2 = [...pages];
         func();
         setPages(pages2);
@@ -24,26 +24,27 @@ const PageSlider = (props) => {
         }
         return array;
     }
-    function goright(){
+    function pageRight(){
         for (let i = 0; i < pages.length; i++) {
            pages[i].value+=pages.length ;
         }
-     }
-    function  goleft(){
+    }
+
+    function  pageLeft(){
         pages.forEach(element => {
             element.value-=pages.length
         });
-     }
+    }
 
     return (
         <div className={s.pages}>
             {pageCount<pagesLastIndex+2 ? undefined 
-                          : <button onClick={()=> { onClick(goleft)}} disabled={pages[0].value===1} >Назад</button>}
+                          : <button onClick={()=> { onClick(pageLeft)}} disabled={pages[0].value===1} >Назад</button>}
            {pages.map(p => p.value<=pageCount 
                                 ? <span className={Number(props.pageNumb)===p.value ? s.selectedPage : undefined} key={p.id} onClick={(e)=>props.dispatch(changePageNumb(e.currentTarget.innerText))}>{p.value}</span> 
                                 : <span key={p.id}></span>)} 
            {pageCount<pagesLastIndex+2 ? undefined 
-                         : <button onClick={()=> { onClick(goright)}} disabled={pages[pagesLastIndex].value>pageCount}>Вперед</button>}
+                         : <button onClick={()=> { onClick(pageRight)}} disabled={pages[pagesLastIndex].value>=pageCount}>Вперед</button>}
         </div>
     )
 }

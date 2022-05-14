@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { UsersAPI } from '../../API-AXIOS/api';
+import {  UsersAPI } from '../../API-AXIOS/api';
 import {  setUsers, setUsersCount } from '../../Redux/Slices/usersSlice';
 import PageSlider from './PageSlider';
 import s from './Users.module.css';
@@ -16,6 +16,9 @@ const Users =(props)=>{
    const pageSize = useSelector(state=>state.users.pageSize);
    const pageNumb = useSelector(state=>state.users.pageNumb);
    const userPhoto = useSelector(state=>state.users.userPhoto);
+   const [error, setError] = useState('');
+   
+
    
   //запрос на сервер за пользователями 
    useEffect(()=>{
@@ -29,12 +32,15 @@ const Users =(props)=>{
       
    },[dispatch, pageSize, pageNumb ])
    useEffect(()=>{
-      // UsersAPI.follow(23660).then(response=>{
+      // UsersAPI.follow(23975).then(response=>{
       //    console.log(response)
+      // }).catch(function (error) {
+      //    setError(error);
       // })
-   })
+   },[])
    return(
       <div className={s.usersBlock}>
+         {error.message}
          <PageSlider  dispatch={dispatch} pageNumb={pageNumb} />
          <div className={s.users}>
          {users.map(u=><div className={s.user} key={u.id}>
@@ -43,7 +49,10 @@ const Users =(props)=>{
             <img src={u.photos.small ? u.photos.small: userPhoto} alt='avatar' width={150}/>
             </Link>
             
-            <span>{u.name} </span> <button>{u.followed ? 'отписаться' : 'подписаться'}</button> <br/>
+            <span>{u.name} </span> 
+            {u.followed ? <button onClick={()=>{UsersAPI.unfollow(u.id)}} >отписаться</button> 
+                        : <button onClick={()=>{UsersAPI.follow(u.id)}} >подписаться</button> }
+            <p></p>
             {u.status ? <p>status: {u.status}</p> : null}
          </div>)}
          </div>

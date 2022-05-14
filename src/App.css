@@ -3,7 +3,7 @@
   /* width: 1000px; */
   display: grid;
   color: antiquewhite;
-  /* font-size: 20px; */
+  font-size: 30px;
   height: 100vh;
   grid-template-areas: 
   "h h"
