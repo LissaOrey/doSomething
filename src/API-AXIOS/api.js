@@ -40,6 +40,11 @@ export const ProfileAPI ={
             return response
         })
     },
+    updatePhoto(image){
+        return instance.put(`profile/photo`, {image}).then(response=>{
+            return response
+        })
+    },
     updateProfile(aboutMe, lookingForAJob, lookingForAJobDescription,fullName, contacts){
         return instance.put(`profile`, {aboutMe, lookingForAJob, lookingForAJobDescription,fullName, contacts}).then(response=>{
             return response

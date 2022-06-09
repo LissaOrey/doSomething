@@ -7,6 +7,7 @@ import Nav from './Components/Nav/Nav';
 import { Routes, Route } from 'react-router-dom';
 import Home from './Components/Home/Home';
 import Login from './Components/Login/Login';
+import ProfileForm from './Components/Profile/ProfileForm';
 
 function App(props) {
   return (
@@ -20,6 +21,7 @@ function App(props) {
           <Route path='profile'>
             <Route path='' element={<Profile />} />
             <Route path=':id' element={<Profile />} />
+            {/* <Route path='update' element={<ProfileForm />} /> */}
           </Route>
           <Route path='users' element={<Users />}  />
           <Route path='game' element={<Game />}  />

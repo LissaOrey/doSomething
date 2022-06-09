@@ -8,20 +8,6 @@ const profileSlice = createSlice({
         profile: null,
         status: null,
         statusLoaded: false,
-        aboutMe: 'I learn JS',
-        lookingForAJob: true, 
-        lookingForAJobDescription: 'frontend',
-        fullName: 'Lisa-Orey',
-        contacts: {
-            facebook: `www.facebook.com`,
-            github: null,
-            instagram: null,
-            mainLink: null,
-            twitter: null,
-            vk: 'www.vk.ru',
-            website: null,
-            youtube: null,
-        },
     },
     reducers: {
         setProfile: (state, action)=>{
@@ -33,6 +19,7 @@ const profileSlice = createSlice({
         setStatusLoading: (state,action)=>{
             state.statusLoaded = action.payload
         },
+        
     }
 })
 export const getProfile=(dispatch, userId, toggle, setError)=>{
@@ -57,5 +44,5 @@ export const updateStatus=(dispatch, status)=>{
     })
 }
 const {actions, reducer} = profileSlice;
-export const {setProfile,setStatus,setStatusLoading } = actions;
+export const {setProfile,setStatus,setStatusLoading, setFullName} = actions;
 export default reducer;

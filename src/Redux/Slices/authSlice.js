@@ -9,7 +9,7 @@ const authSlice = createSlice({
         email: null,
         login: null,
         isAuth: false,
-        toggle: false
+        authToggle: false
     },
     reducers:{
         auth: (state,action)=>{
@@ -25,7 +25,7 @@ const authSlice = createSlice({
             state.id = action.payload
         },
         setToggle: (state,action)=>{
-            state.toggle = action.payload
+            state.authtToggle = action.payload
         },
     }
 })
