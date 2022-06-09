@@ -44,7 +44,8 @@ export const authMe=(dispatch)=>{
           dispatch(setLogin(null))
           dispatch(setId(null))
           dispatch(setEmail(null))
-          dispatch(setToggle(false))
+          dispatch(setToggle(true))
+          
        }
     })
 }

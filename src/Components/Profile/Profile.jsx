@@ -2,42 +2,41 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useParams } from 'react-router-dom';
 import { ProfileAPI } from '../../API-AXIOS/api';
-import { setProfile, setStatus } from '../../Redux/Slices/profileSlice';
+import { getProfile } from '../../Redux/Slices/profileSlice';
 import s from './Profile.module.css';
 import avatar from './../Users/small.jpg';
+import Status from './Status';
 
 
 const Profile = (props) => {
    let params = useParams();
    const [userId, setUserId] = useState(params.id);
-   const myId = useSelector(state=>state.auth.id);
-   const toggle = useSelector(state=>state.auth.toggle);
-   const isAuth = useSelector(state=>state.auth.isAuth);
+   const myId = useSelector(state => state.auth.id);
+   const toggle = useSelector(state => state.auth.toggle);
+   const isAuth = useSelector(state => state.auth.isAuth);
    const [error, setError] = useState();
    const dispatch = useDispatch();
    const profile = useSelector(state => state.profile.profile)
    const status = useSelector(state => state.profile.status)
+   const contacts = useSelector(state => state.profile.contacts)
    let pc = profile ? profile.contacts : null;
 
    if (!userId && myId) {
       setUserId(myId)
    }
-
+   
    useEffect(() => {
-      if (toggle) {
-         dispatch(setProfile(null))
-         ProfileAPI.getProfile(userId).then(response => {
-            dispatch(setProfile(response.data))
-         }).catch(function (error) {
-            setError(error);
-         })
-         ProfileAPI.getStatus(userId).then(response=>{
-            dispatch(setStatus(response.data))
+      if(isAuth && toggle) getProfile(dispatch, userId, toggle, setError)
+   }, [userId, dispatch, toggle, isAuth])
+   
+   useEffect(() => {
+      if (profile && profile.userId === myId) {
+         ProfileAPI.updateProfile('I learn JS', true, 'frontend', 'Lisa-Orey', contacts)
+            .then(response => {
+               console.log(response)
          })
       }
-      
-   }, [userId, dispatch, toggle])
-
+   }, [profile, myId, contacts])
 
    function allObjKeysIsNull(object) {
       let a = 0;
@@ -51,18 +50,26 @@ const Profile = (props) => {
       }
       return true
    }
-   if(!isAuth && toggle){
+   if (!isAuth && toggle) {
       return <Navigate to='/login' />
    }
-   if (!profile) {
-      return error ? <div>Error: {error.message}</div> : <div>Loading...</div> 
+   if (!isAuth && !toggle) {
+      return <div>Loading</div>
    }
+   if (!profile) {
+      return error ? <div>Error: {error.message}</div> 
+                   : <div>Loading...</div>
+   }
+
    return (
       <div className={s.profile}>
          {error ? <div>{error.message}</div>
             : <div>
-               {profile.fullName ? <div>name: {profile.fullName}</div> : undefined}
-               {profile.userId === myId ? <div>{status}</div> : <div>status: {status}</div>}
+               {profile.userId===myId && <button >UPDATE PROFILE</button>  }
+               {profile.fullName && <div>name: {profile.fullName}</div> }
+               {profile.userId === myId
+                  ? <Status   />
+                  : <div>status: {status}</div>}
                {profile.photos.large ? <div><img src={profile.photos.large} alt='' /></div> : <div><img src={avatar} alt='avatar' /></div>}
                {profile.aboutMe ? <div>about me: {profile.aboutMe}</div> : undefined}
                {profile.lookingForAJob ? <div>looking for a job: yes</div> : undefined}

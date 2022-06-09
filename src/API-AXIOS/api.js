@@ -34,6 +34,16 @@ export const ProfileAPI ={
         return instance.get(`profile/status/${id}`).then(response=>{
             return response
         })
+    },
+    updateStatus(status){
+        return instance.put(`profile/status`, {status}).then(response=>{
+            return response
+        })
+    },
+    updateProfile(aboutMe, lookingForAJob, lookingForAJobDescription,fullName, contacts){
+        return instance.put(`profile`, {aboutMe, lookingForAJob, lookingForAJobDescription,fullName, contacts}).then(response=>{
+            return response
+        })
     }
 }
 
