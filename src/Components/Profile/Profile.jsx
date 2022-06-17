@@ -7,7 +7,7 @@ import s from './Profile.module.css';
 import avatar from './../Users/small.jpg';
 import Status from './Status';
 import ProfileForm from './ProfileForm';
-import PhotoForm from './PhotoForm';
+// import PhotoForm from './PhotoForm';
 
 
 const Profile = (props) => {
@@ -46,6 +46,7 @@ const Profile = (props) => {
    })
 
    function allObjKeysIsNull(object) {
+      //если все контакты пусты, то не показываем их вовсе
       let a = 0;
       for (const key in object) {
          if (object[key] === null) {
@@ -57,12 +58,15 @@ const Profile = (props) => {
       }
       return true
    }
+
    if (!isAuth && authToggle) {
       return <Navigate to='/login' />
    }
+
    if (!isAuth && !authToggle) {
       return <div>Loading</div>
    }
+
    if (!profile) {
       return error ? <div>Error: {error.message}</div>
          : <div>Loading...</div>
@@ -103,7 +107,7 @@ const Profile = (props) => {
 
          </div>}
          <h2>PHOTO FORM</h2>
-         <PhotoForm />
+         {/* <PhotoForm /> */}
       </div>
 
    )

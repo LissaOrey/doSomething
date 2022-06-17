@@ -1,5 +1,5 @@
 import './App.css';
-import Game from './Components/Game/Game';
+import GameContainer from './Components/Game/GameContainer';
 import Users from './Components/Users/Users';
 import Profile from './Components/Profile/Profile';
 import Header from './Components/Header/Header';
@@ -7,7 +7,7 @@ import Nav from './Components/Nav/Nav';
 import { Routes, Route } from 'react-router-dom';
 import Home from './Components/Home/Home';
 import Login from './Components/Login/Login';
-import ProfileForm from './Components/Profile/ProfileForm';
+// import ProfileForm from './Components/Profile/ProfileForm';
 
 function App(props) {
   return (
@@ -24,7 +24,7 @@ function App(props) {
             {/* <Route path='update' element={<ProfileForm />} /> */}
           </Route>
           <Route path='users' element={<Users />}  />
-          <Route path='game' element={<Game />}  />
+          <Route path='game' element={<GameContainer />}  />
           <Route path='login' element={<Login />}  />
           <Route path="*" element={<div>Not found</div>} />
         </Routes>

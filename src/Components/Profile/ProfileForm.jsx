@@ -5,6 +5,7 @@ import { ProfileAPI } from '../../API-AXIOS/api';
 
 
 const ProfileForm = (props) => {
+   
    const dispatch = useDispatch();
    const profile = useSelector(state => state.profile.profile)
 
@@ -69,7 +70,7 @@ const ProfileForm = (props) => {
          <h2>Update your profile</h2>
          <form onSubmit={handleSubmit(onSubmit)}>
             <div><label>name
-               <input {...register('fullName', {
+               <input defaultValue={profile.fullName} {...register('fullName', {
                   required: false,
                   // required: 'поле обязательно к заполнению',
                   minLength: {
@@ -82,7 +83,7 @@ const ProfileForm = (props) => {
 
             <div>
                <label>aboutMe
-                  <input {...register('aboutMe', {
+                  <input defaultValue={profile.aboutMe} {...register('aboutMe', {
                      required: false,
                      // required: 'поле обязательно к заполнению',
                      minLength: {
@@ -93,18 +94,18 @@ const ProfileForm = (props) => {
                </label>
             </div>
             <div><label>lookingForAJobDescription
-               <input {...register('lookingForAJobDescription', {
+               <input defaultValue={profile.lookingForAJobDescription}  {...register('lookingForAJobDescription', {
                   required: false,
                })} />
             </label></div>
             {errors?.lookingForAJobDescription && <p>{errors?.lookingForAJobDescription?.message || 'Error!'}</p>}
             <label>Looking for a job
-               <input type={'checkbox'} {...register('lookingForAJob', {})} />
+               <input  defaultValue={profile.lookingForAJob} type={'checkbox'} {...register('lookingForAJob', {})} />
             </label>
             <div>
                <p>Contacts</p>
                {contactsList.map(c => <div key={c.id}><label>{c.n}
-                  <input  {...register(c.n, {
+                  <input defaultValue={profile.contacts[c.n]}  {...register(c.n, {
                      required: false,
                   })} />
                </label></div>)}

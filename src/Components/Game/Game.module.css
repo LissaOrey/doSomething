@@ -1,0 +1,67 @@
+.field{
+    display: grid;
+    /* grid-area: g; */
+    width: 400px;
+    height: 400px;
+     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-template-rows: 100px 100px 100px 100px ; 
+
+    text-align: center;
+    border: 10px solid rgb(44, 43, 43);
+    background-color:  rgb(44, 43, 43);
+    /* border: 10px solid rgb(44, 43, 43);
+    background-color:  rgb(44, 43, 43); */
+    border-radius: 10%;
+    margin: 0 auto;
+    font-weight: bolder;
+}
+.cell{
+    font-size: 30px;
+    border: 5px solid rgb(255, 248, 248);
+    background-color:  grey;
+    font-style: italic;
+    border-radius: 30%;
+}
+.num2 {
+    background-color: rgb(99, 109, 251);
+}
+.num4 {
+    background-color: violet;
+}
+.num8 {
+    background-color: rgb(255, 68, 68);
+}
+.num16 {
+    background-color: rgb(226, 203, 2);
+}
+.num32 {
+    background-color: rgb(57, 255, 90);
+}
+.num64 {
+    background-color: rgb(9, 240, 228);
+}
+.num128 {
+    background-color: rgb(5, 3, 134);
+}
+.num256 {
+    background-color: rgb(1, 100, 26);
+}
+.num512 {
+    background-color: rgb(177, 0, 177);
+}
+.num1024 {
+    background-color: rgb(211, 0, 0);
+}
+.num2048 {
+    background-color: rgb(116, 255, 190);
+}
+
+
+.popupbtn{
+    font-size: 18px;
+    color:wheat;
+    background-color: black;
+}
+
+
+

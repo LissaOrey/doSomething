@@ -1,0 +1,25 @@
+.interfaceButton{
+    float: left;
+    /* width: 100px; */
+    display: block;
+}
+.gameInterface{
+    grid-area: i;
+    font-size: 22px;
+    width: 400px;
+    margin: 15px auto;
+}
+.btn{
+    color: coral;
+    font-size: 26px;
+
+    /* float: left; */
+    /* text-align-last: left; */
+
+}
+.score{
+    float: right;
+    padding-right: 10px;
+    /* font-size: 16px; */
+    /* text-align: right; */
+}
