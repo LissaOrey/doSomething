@@ -27,8 +27,13 @@ const Profile = (props) => {
    if (!userId && myId) {
       setUserId(myId)
    }
+   
    if (!params.id && userId !== myId) {
       setUserId(myId)
+   }
+
+   if(params.id && userId=== myId){
+      setUserId(params.id)
    }
 
    useEffect(() => {
@@ -36,13 +41,12 @@ const Profile = (props) => {
       if (isProfileUpdate){
          getProfile(dispatch, userId, authToggle, setError);
          setIsProfileUpdate(false)
-         // console.log('getprofile')
+         console.log('setIsProfileUpdate')
       } 
-      // console.log('getprofile')
    }, [userId, dispatch, authToggle, isAuth,isProfileUpdate])
 
    useEffect(()=>{
-      ProfileAPI.updatePhoto()
+      // ProfileAPI.updatePhoto()
    })
 
    function allObjKeysIsNull(object) {
@@ -71,7 +75,12 @@ const Profile = (props) => {
       return error ? <div>Error: {error.message}</div>
          : <div>Loading...</div>
    }
-// console.log(profile)
+// console.log(params.id)
+//       console.log(userId)
+//       console.log(myId)
+
+
+
    return (
       <div className={s.profileContainer}>
          {showProfileUpdate ? <ProfileForm setIsProfileUpdate={setIsProfileUpdate} setShowProfileUpdate={setShowProfileUpdate} /> : 
@@ -87,11 +96,11 @@ const Profile = (props) => {
                      : status
                         ? <div>status: {status}</div>
                         : undefined}
-                  {profile.photos.large ? <div><img src={profile.photos.large} alt='' /></div> : <div><img src={avatar} alt='avatar' /></div>}
-                  {profile.aboutMe ? <div>about me: {profile.aboutMe}</div> : undefined}
+                  {profile.photos.large ? <div><img src={profile.photos.large} alt='avatar' /></div> : <div><img src={avatar} alt='avatar' /></div>}
+                  {profile.aboutMe && <div>about me: {profile.aboutMe}</div> }
                   {profile.lookingForAJob ? <div>looking for a job: yes</div> : <div>looking for a job: no</div>}
-                  {profile.lookingForAJobDescription ? <div>looking for a job description: {profile.lookingForAJobDescription}</div> : undefined}
-                  {allObjKeysIsNull(pc) ? <div>contacts:
+                  {profile.lookingForAJobDescription && <div>looking for a job description: {profile.lookingForAJobDescription}</div> }
+                  {allObjKeysIsNull(pc) && <div>contacts:
                      <ul>
                         {pc.facebook ? <li>facebook: {pc.facebook}</li> : undefined}
                         {pc.github ? <li>github: {pc.github}</li> : undefined}
@@ -102,7 +111,7 @@ const Profile = (props) => {
                         {pc.website ? <li>website: {pc.website}</li> : undefined}
                         {pc.youtube ? <li>youtube: {pc.youtube}</li> : undefined}
                      </ul>
-                  </div> : undefined}
+                  </div> }
                </div>}
 
          </div>}

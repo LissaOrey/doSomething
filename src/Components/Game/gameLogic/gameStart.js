@@ -29,14 +29,14 @@ export const startRandom = (copy, setField) => {
                 //start again if numbers coordinates =/ example [0][1] and [0][1] 
                 startRandom(copy, setField);
             } else {
-                addRandomCoordinates(copy, k1, k2, k3, k4, "2", "4")
+                addRandomCoordinates(copy, k1, k2, k3, k4, 2, 4)
             }
             break;
         case 1:
             if (k2 === k4 && k1 === k3) {
                 startRandom(copy,setField);
             } else {
-                addRandomCoordinates(copy, k1, k2, k3, k4, "2", "2")
+                addRandomCoordinates(copy, k1, k2, k3, k4, 2, 2)
             }
             break;
         default:

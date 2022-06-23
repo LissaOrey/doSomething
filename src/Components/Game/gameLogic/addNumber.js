@@ -5,7 +5,7 @@ export const addNum = (copy, arr, changeArrData, setField) => {
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < arr.length; j++) {
             let item = arr[i]
-            if (item[j] === '') {
+            if (item[j] === 0) {
                 arr2.push(i + String(j))
             }
         }
@@ -19,8 +19,8 @@ export const addNum = (copy, arr, changeArrData, setField) => {
     let b = Number(coordinateRandomEmptyCell[1]);
     copy.forEach(el => {
         if (el.x === a && el.y === b) {
-            arr[a][b] = '2';
-            el.value = '2';
+            arr[a][b] = 2;
+            el.value = 2;
         }
     })
     setField(copy)

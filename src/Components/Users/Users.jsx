@@ -30,14 +30,8 @@ const Users =(props)=>{
          dispatch(setUsersCount(response.data.totalCount))
       })
       
-   },[dispatch, pageSize, pageNumb ])
-   useEffect(()=>{
-      // UsersAPI.follow(23975).then(response=>{
-      //    console.log(response)
-      // }).catch(function (error) {
-      //    setError(error);
-      // })
-   },[])
+   },[users,dispatch, pageSize, pageNumb ])
+   
    return(
       <div className={s.usersBlock}>
          {error.message}
@@ -46,10 +40,11 @@ const Users =(props)=>{
          {users.map(u=><div className={s.user} key={u.id}>
             <p>{u.id}</p>
             <Link to={'/profile/'+u.id}>
+            <span>{u.name} </span>            </Link>
+            <Link to={'/profile/'+u.id}>
             <img src={u.photos.small ? u.photos.small: userPhoto} alt='avatar' width={150}/>
             </Link>
-            
-            <span>{u.name} </span> 
+             
             {u.followed ? <button onClick={()=>{UsersAPI.unfollow(u.id)}} >отписаться</button> 
                         : <button onClick={()=>{UsersAPI.follow(u.id)}} >подписаться</button> }
             <p></p>

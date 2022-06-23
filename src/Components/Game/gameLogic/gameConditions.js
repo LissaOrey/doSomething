@@ -3,161 +3,161 @@
  export const gameConditions = (a, b, c, d, setScore, score) => {
     // a,b,c,d это клетки игры(данные из массива)
     // a,b,c,d - cells of game (array's datas/values)
-    if (a === '' && b !== '' && c !== '' && d !== '') {
+    if (a === 0 && b !== 0 && c !== 0 && d !== 0) {
         if (d !== c && c === b) {
-            c = String(b * 2);
-            b = '';
-            setScore(score + Number(c))
-            // setScore((prevScore)=> prevScore + Number(c))
+            c = b * 2;
+            b = 0;
+            setScore(score + c)
+            // setScore((prevScore)=> prevScore +  c))
         } else if (d === c) {
-            d = String(c * 2);
+            d = c * 2;
             c = b;
-            b = '';
-            setScore(score + Number(d))
+            b = 0;
+            setScore(score +d)
         }
-    } else if (a !== '' && b === '' && c !== '' && d !== '') {
+    } else if (a !== 0 && b === 0 && c !== 0 && d !== 0) {
         if (d !== c && c === a) {
-            c = String(a * 2);
-            b = '';
-            a = '';
-            setScore(score + Number(c))
+            c = a * 2;
+            b = 0;
+            a = 0;
+            setScore(score + c)
         } else if (d !== c && c !== a) {
             b = a;
-            a = '';
+            a = 0;
         } else if (d === c) {
-            d = String(c * 2);
+            d = c * 2;
             c = a;
-            a = '';
-            b = '';
-            setScore(score + Number(d))
+            a = 0;
+            b = 0;
+            setScore(score + d)
         }
-    } else if (a !== '' && b !== '' && c === '' && d !== '') {
+    } else if (a !== 0 && b !== 0 && c === 0 && d !== 0) {
         if (d !== b && b !== a) {
             c = b;
             b = a;
-            a = '';
+            a = 0;
         } else if (d !== b && b === a) {
-            c = String(b * 2);
-            b = '';
-            a = '';
-            setScore(score + Number(c))
+            c = b * 2;
+            b = 0;
+            a = 0;
+            setScore(score + c)
         } else if (d === b) {
-            d = String(b * 2);
+            d = b * 2;
             c = a;
-            b = '';
-            a = '';
-            setScore(score + Number(d))
+            b = 0;
+            a = 0;
+            setScore(score + d)
         }
-    } else if (a !== '' && b !== '' && c !== '' && d === '') {
+    } else if (a !== 0 && b !== 0 && c !== 0 && d === 0) {
         if (c !== b && b !== a) {
             d = c;
             c = b;
             b = a;
-            a = '';
+            a = 0;
         } else if (c !== b && b === a) {
             d = c;
-            c = String(b * 2);
-            b = '';
-            a = '';
-            setScore(score + Number(c))
+            c = b * 2;
+            b = 0;
+            a = 0;
+            setScore(score + c)
         } else if (c === b) {
-            d = String(c * 2);
+            d = c * 2;
             c = a;
-            b = '';
-            a = '';
-            setScore(score + Number(d))
+            b = 0;
+            a = 0;
+            setScore(score + d)
         }
-    } else if (a === '' && b !== '' && c !== '' && d === '') {
+    } else if (a === 0 && b !== 0 && c !== 0 && d === 0) {
         if (b !== c) {
             d = c;
             c = b;
-            b = '';
-            a = '';
+            b = 0;
+            a = 0;
         } else {
-            d = String(c * 2);
-            c = '';
-            b = '';
-            a = '';
-            setScore(score + Number(d))
+            d = c * 2;
+            c = 0;
+            b = 0;
+            a = 0;
+            setScore(score +  d)
         }
-    } else if (a !== '' && b === '' && c !== '' && d === '') {
+    } else if (a !== 0 && b === 0 && c !== 0 && d === 0) {
         if (a === c) {
-            d = String(c * 2);
-            c = '';
-            b = '';
-            a = '';
-            setScore(score + Number(d))
+            d =  c * 2;
+            c = 0;
+            b = 0;
+            a = 0;
+            setScore(score +  d)
         } else {
             d = c;
             c = a;
-            a = '';
+            a = 0;
         }
-    } else if (a === '' && b !== '' && c === '' && d !== '') {
+    } else if (a === 0 && b !== 0 && c === 0 && d !== 0) {
         if (d === b) {
-            d = String(b * 2);
-            b = '';
-            setScore(score + Number(d))
+            d =  b * 2;
+            b = 0;
+            setScore(score +  d)
         } else {
             c = b;
-            b = '';
+            b = 0;
         }
-    } else if (a !== '' && b === '' && c === '' && d !== '') {
+    } else if (a !== 0 && b === 0 && c === 0 && d !== 0) {
         if (a === d) {
-            d = String(a * 2);
-            a = '';
-            setScore(score + Number(d))
+            d =  a * 2;
+            a = 0;
+            setScore(score +  d)
         } else {
             c = a;
-            a = '';
+            a = 0;
         }
-    } else if (a === '' && b === '' && c !== '' && d !== '' && d === c) {
-        d = String(c * 2);
-        c = '';
-        setScore(score + Number(d))
-    } else if (a !== '' && b !== '' && c === '' && d === '') {
+    } else if (a === 0 && b === 0 && c !== 0 && d !== 0 && d === c) {
+        d =  c * 2;
+        c = 0;
+        setScore(score +  d)
+    } else if (a !== 0 && b !== 0 && c === 0 && d === 0) {
         if (a === b) {
-            d = String(a * 2);
-            a = '';
-            b = '';
-            setScore(score + Number(d))
+            d =  a * 2;
+            a = 0;
+            b = 0;
+            setScore(score +  d)
         } else {
             d = b;
             c = a;
-            b = '';
-            a = '';
+            b = 0;
+            a = 0;
         }
-    } else if (a !== '' && b !== '' && c !== '' && d !== '') {
+    } else if (a !== 0 && b !== 0 && c !== 0 && d !== 0) {
         if (d !== c && c !== b && b === a) {
-            b = String(a * 2);
-            a = '';
-            setScore(score + Number(b))
+            b =  a * 2;
+            a = 0;
+            setScore(score +  b)
         } else if (d !== c && c === b) {
-            c = String(b * 2);
+            c =  b * 2;
             b = a;
-            a = '';
-            setScore(score + Number(c))
+            a = 0;
+            setScore(score +  c)
         } else if (d === c && b === a) {
-            d = String(c * 2);
-            c = String(b * 2);
-            b = '';
-            a = '';
-            setScore(score + Number(d)+ Number(c))
+            d =  c * 2;
+            c =  b * 2;
+            b = 0;
+            a = 0;
+            setScore(score +  d+  c)
         } else if (d === c && b !== a) {
-            d = String(c * 2);
+            d =  c * 2;
             c = b;
             b = a;
-            a = '';
-            setScore(score + Number(d))
+            a = 0;
+            setScore(score +  d)
         }
-    } else if (a !== '' && b === '' && c === '' && d === '') {
+    } else if (a !== 0 && b === 0 && c === 0 && d === 0) {
         d = a;
-        a = '';
-    } else if (a === '' && b !== '' && c === '' && d === '') {
+        a = 0;
+    } else if (a === 0 && b !== 0 && c === 0 && d === 0) {
         d = b;
-        b = '';
-    } else if (a === '' && b === '' && c !== '' && d === '') {
+        b = 0;
+    } else if (a === 0 && b === 0 && c !== 0 && d === 0) {
         d = c;
-        c = '';
+        c = 0;
     }
     return [a, b, c, d];
 }

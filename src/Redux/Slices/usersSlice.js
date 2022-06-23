@@ -18,7 +18,7 @@ const usersSlice = createSlice({
         setUsers: (state, action)=>{
             state.users= action.payload
         },
-        setUsersCount: (state, action)=>{
+        c: (state, action)=>{
             state.usersCount= action.payload
         },
         changePageNumb: (state, action)=>{
