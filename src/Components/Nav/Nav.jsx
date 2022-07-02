@@ -8,6 +8,7 @@ const Nav =(props)=>{
        <nav>
           <div><Link to='/profile'>Profile</Link></div>
           <div><Link to='/users'>Users</Link></div>
+          <div><Link to='/friends'>Friends</Link></div>
           <div><Link to='/game'>Game 2048</Link></div>
        </nav>
     </div>

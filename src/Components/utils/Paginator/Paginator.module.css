@@ -1,0 +1,11 @@
+
+
+.pages{
+    margin: 15px;
+    display: flex;
+    flex-flow: row wrap;
+    gap: 7px;
+}
+.selectedPage{
+    color: blue;
+}

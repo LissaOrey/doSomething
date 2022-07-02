@@ -8,6 +8,7 @@ const profileSlice = createSlice({
         profile: null,
         status: null,
         statusLoaded: false,
+        error: null
     },
     reducers: {
         setProfile: (state, action)=>{
@@ -19,10 +20,13 @@ const profileSlice = createSlice({
         setStatusLoading: (state,action)=>{
             state.statusLoaded = action.payload
         },
+        setError: (state,action)=>{
+            state.error = action.payload;
+        }
         
     }
 })
-export const getProfile=(dispatch, userId, toggle, setError)=>{
+export const getProfile=(dispatch, userId, toggle)=>{
     // if (toggle) {
         dispatch(setProfile(null))
         ProfileAPI.getProfile(userId).then(response => {
@@ -44,5 +48,5 @@ export const updateStatus=(dispatch, status)=>{
     })
 }
 const {actions, reducer} = profileSlice;
-export const {setProfile,setStatus,setStatusLoading, setFullName} = actions;
+export const {setProfile,setStatus,setStatusLoading, setError} = actions;
 export default reducer;

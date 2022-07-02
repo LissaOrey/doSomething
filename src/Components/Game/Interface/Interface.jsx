@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '../../utils/Button';
+import Button from '../../utils/Button/Button';
 import s from './Interface.module.css';
 
 const Interface=(props)=>{

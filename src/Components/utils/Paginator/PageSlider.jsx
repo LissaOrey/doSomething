@@ -1,7 +1,7 @@
 import React, {  useState } from 'react';
 import { useSelector } from 'react-redux';
-import { changePageNumb } from '../../Redux/Slices/usersSlice';
-import s from './Users.module.css';
+import { changePageNumb } from '../../../Redux/Slices/usersSlice';
+import s from './Paginator.module.css';
 
 const PageSlider = (props) => {
     const usersCount = useSelector(state=>state.users.usersCount);
@@ -38,13 +38,13 @@ const PageSlider = (props) => {
 
     return (
         <div className={s.pages}>
-            {pageCount<pagesLastIndex+2 ? undefined 
-                          : <button onClick={()=> { onClick(pageLeft)}} disabled={pages[0].value===1} >Назад</button>}
+            {pages[0].value===1 ? undefined 
+                          : <button onClick={()=> { onClick(pageLeft)}} >Назад</button>}
            {pages.map(p => p.value<=pageCount 
-                                ? <span className={Number(props.pageNumb)===p.value ? s.selectedPage : undefined} key={p.id} onClick={(e)=>props.dispatch(changePageNumb(e.currentTarget.innerText))}>{p.value}</span> 
+                                ? <span className={props.pageNumb===p.value ? s.selectedPage : undefined} key={p.id} onClick={(e)=>props.dispatch(changePageNumb(Number(e.currentTarget.innerText)))}>{p.value}</span> 
                                 : <span key={p.id}></span>)} 
-           {pageCount<pagesLastIndex+2 ? undefined 
-                         : <button onClick={()=> { onClick(pageRight)}} disabled={pages[pagesLastIndex].value>=pageCount}>Вперед</button>}
+           {pages[pagesLastIndex].value>=pageCount ? undefined 
+                         : <button onClick={()=> { onClick(pageRight)}} >Вперед</button>}
         </div>
     )
 }

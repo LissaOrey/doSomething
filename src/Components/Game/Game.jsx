@@ -59,17 +59,7 @@ const Game = (props) => {
         }
     }
     
-    const gameOver = (copy) => {
-        // let copy = field.map(f => ({ ...f }));
-        let f = [
-            [], [], [], []
-        ];
-        changeArrData(copy, f);
-        if (f[0][0] !==  0 && f[0][1] !==  0 && f[0][2] !==  0 && f[0][3] !==  0 && f[1][0] !==  0 && f[1][1] !==  0 && f[1][2] !==  0 && f[1][3] !==  0 && f[2][0] !==  0 && f[2][1] !==  0 && f[2][2] !==  0 && f[2][3] !==  0 && f[3][0] !==  0 && f[3][1] !==  0 && f[3][2] !==  0 && f[3][3] !==  0 && f[0][0] !== f[0][1] && f[0][0] !== f[1][0] && f[0][1] !== f[1][1] && f[0][1] !== f[0][2] && f[0][2] !== f[0][3] && f[0][2] !== f[1][2] && f[0][3] !== f[1][3] && f[1][0] !== f[1][1] && f[1][0] !== f[2][0] && f[1][1] !== f[1][2] && f[1][2] !== f[1][3] && f[1][1] !== f[2][1] && f[1][2] !== f[2][2] && f[1][3] !== f[2][3] && f[2][3] !== f[3][3] && f[3][2] !== f[3][3] && f[2][2] !== f[3][2] && f[2][1] !== f[2][2] && f[2][1] !== f[3][1] && f[3][1] !== f[3][2] && f[2][0] !== f[2][1] && f[2][0] !== f[3][0] && f[3][0] !== f[3][1] && f[2][2] !== f[2][3]) {
-            setOpenPopup(true);
-            bestScoreValue()
-        }
-    }
+    
 
     const restart = () => {
             let copy = field.map(f => ({ ...f }));
@@ -97,31 +87,44 @@ const Game = (props) => {
     });
     //!старт игры
     useEffect(() => {
-        // restart()
         let copy = field.map(f => ({ ...f }));
         startRandom(copy, setField)
-        console.log('start')
     },[])
     // win game 
     useEffect(() => {
         // gameOver(field);
         let a = field.some((el) => {
-            return el.value === '2048'
+            return el.value === 2048
         })
         if (a) {
             setIsWin(true)
+            // setOpenPopup(true);
         }
     }, [field])
+
+       
     //game over 
     useEffect(()=>{
+        const gameOver = (copy) => {
+            //best score
+            const bestScoreValue =()=>{
+                if (score > bestScore) {
+                setBestscore(score)
+                } 
+            }
+            // let copy = field.map(f => ({ ...f }));
+            let f = [
+                [], [], [], []
+            ];
+            changeArrData(copy, f);
+            if (f[0][0] !==  0 && f[0][1] !==  0 && f[0][2] !==  0 && f[0][3] !==  0 && f[1][0] !==  0 && f[1][1] !==  0 && f[1][2] !==  0 && f[1][3] !==  0 && f[2][0] !==  0 && f[2][1] !==  0 && f[2][2] !==  0 && f[2][3] !==  0 && f[3][0] !==  0 && f[3][1] !==  0 && f[3][2] !==  0 && f[3][3] !==  0 && f[0][0] !== f[0][1] && f[0][0] !== f[1][0] && f[0][1] !== f[1][1] && f[0][1] !== f[0][2] && f[0][2] !== f[0][3] && f[0][2] !== f[1][2] && f[0][3] !== f[1][3] && f[1][0] !== f[1][1] && f[1][0] !== f[2][0] && f[1][1] !== f[1][2] && f[1][2] !== f[1][3] && f[1][1] !== f[2][1] && f[1][2] !== f[2][2] && f[1][3] !== f[2][3] && f[2][3] !== f[3][3] && f[3][2] !== f[3][3] && f[2][2] !== f[3][2] && f[2][1] !== f[2][2] && f[2][1] !== f[3][1] && f[3][1] !== f[3][2] && f[2][0] !== f[2][1] && f[2][0] !== f[3][0] && f[3][0] !== f[3][1] && f[2][2] !== f[2][3]) {
+                setOpenPopup(true);
+                bestScoreValue()
+            }
+        }
         gameOver(field);
-    },[field, gameOver])
-    //best score
-const bestScoreValue =()=>{
-    if (score > bestScore) {
-        setBestscore(score)
-    } 
-}
+    },[field, bestScore,score ])
+ 
 const onClickPlayAgain=()=>{
     setOpenPopup(false); 
     restart();
@@ -137,7 +140,7 @@ const closePopup=()=>{
                                 btnClassName={s.popupbtn}
              />
         }
-        {isWin && <Popup text='YOU WIN' closePopup={closePopup} closeSpan='x'  /> }
+        {isWin &&  <Popup text='YOU WIN' closePopup={closePopup} closeSpan='x'  /> }
             <div>
                 <Interface bestScore={bestScore} 
                         restartGame={restart}

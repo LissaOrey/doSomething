@@ -25,7 +25,7 @@ const authSlice = createSlice({
             state.id = action.payload
         },
         setToggle: (state,action)=>{
-            state.authtToggle = action.payload
+            state.authToggle = action.payload
         },
     }
 })

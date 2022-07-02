@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Navigate, useParams } from 'react-router-dom';
-import { ProfileAPI } from '../../API-AXIOS/api';
 import { getProfile } from '../../Redux/Slices/profileSlice';
 import s from './Profile.module.css';
 import avatar from './../Users/small.jpg';
@@ -11,12 +10,13 @@ import ProfileForm from './ProfileForm';
 
 
 const Profile = (props) => {
+
    let params = useParams();
    const [userId, setUserId] = useState(params.id);
    const myId = useSelector(state => state.auth.id);
-   const authToggle = useSelector(state => state.auth.authtToggle);
+   const authToggle = useSelector(state => state.auth.authToggle);
    const isAuth = useSelector(state => state.auth.isAuth);
-   const [error, setError] = useState();
+   const error = useSelector(state => state.auth.error);
    const [showProfileUpdate, setShowProfileUpdate] = useState(false);
    const [isProfileUpdate, setIsProfileUpdate] = useState(false);
    const dispatch = useDispatch();
@@ -37,12 +37,15 @@ const Profile = (props) => {
    }
 
    useEffect(() => {
-      if (isAuth && authToggle) getProfile(dispatch, userId, authToggle, setError);
+
+      if (isAuth && authToggle) getProfile(dispatch, userId, authToggle);
+
       if (isProfileUpdate){
-         getProfile(dispatch, userId, authToggle, setError);
+         getProfile(dispatch, userId, authToggle);
          setIsProfileUpdate(false)
          console.log('setIsProfileUpdate')
       } 
+
    }, [userId, dispatch, authToggle, isAuth,isProfileUpdate])
 
    useEffect(()=>{
@@ -70,14 +73,13 @@ const Profile = (props) => {
    if (!isAuth && !authToggle) {
       return <div>Loading</div>
    }
-
+   
    if (!profile) {
       return error ? <div>Error: {error.message}</div>
          : <div>Loading...</div>
    }
-// console.log(params.id)
-//       console.log(userId)
-//       console.log(myId)
+
+
 
 
 
