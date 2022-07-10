@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
@@ -6,7 +7,8 @@ import { AuthAPI } from '../../API-AXIOS/api';
 import { authMe } from '../../Redux/Slices/authSlice';
 
 const Login =(props)=>{
-   const dispatch = useDispatch()
+   const dispatch = useDispatch();
+   const [errorMessage, setErrorMessage]=useState('');
    const isAuth = useSelector(state=>state.auth.isAuth)
    const { 
       register, 
@@ -22,11 +24,12 @@ const Login =(props)=>{
          if(response.data.resultCode===0){
             authMe(dispatch)
          }
+         setErrorMessage(response.data.messages[0])
    })
    reset()
   } 
   if(isAuth) return <Navigate replace to='/profile' /> 
-
+  if(errorMessage!=='') alert(errorMessage)
    return(
    <div>
       <h1>Login</h1>

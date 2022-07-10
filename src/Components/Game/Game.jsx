@@ -14,13 +14,10 @@ const Game = (props) => {
     const [field, setField] = useState(props.field);
     const [score, setScore] = useState(props.score);
     const [bestScore, setBestscore] = useState(props.bestScore);
-    const [isWin, setIsWin] = useState(props.isWin)
+    const [isWin, setIsWin] = useState(props.isWin);
 
     const cellStyle = (num) => {
         switch (num) {
-            // case '':{
-            //     return style.num
-            // }
             case  2 : {
                 return s.num2
             }
@@ -59,8 +56,6 @@ const Game = (props) => {
         }
     }
     
-    
-
     const restart = () => {
             let copy = field.map(f => ({ ...f }));
             copy.forEach(el => {
@@ -72,11 +67,12 @@ const Game = (props) => {
     }
     //события клавиатуры
     useEffect(() => {
+        
         const onKeyDown = e =>
-            (e.keyCode === 39) ? goTo(goRight,field,setField,score, setScore) :
-                (e.keyCode === 37) ? goTo(goLeft,field,setField,score, setScore) :
-                    (e.keyCode === 40) ? goTo(goDown,field,setField,score, setScore) :
-                        (e.keyCode === 38) ? goTo(goUp,field,setField,score, setScore) :
+            (e.keyCode === 39 || e.keyCode === 68) ? goTo(goRight,field,setField,score, setScore) :
+                (e.keyCode === 37 || e.keyCode === 65) ? goTo(goLeft,field,setField,score, setScore) :
+                    (e.keyCode === 40 || e.keyCode === 83) ? goTo(goDown,field,setField,score, setScore) :
+                        (e.keyCode === 38 || e.keyCode === 87) ? goTo(goUp,field,setField,score, setScore) :
                             false;
         ;
         document.addEventListener('keydown', onKeyDown);
@@ -107,9 +103,9 @@ const Game = (props) => {
     useEffect(()=>{
         const gameOver = (copy) => {
             //best score
-            const bestScoreValue =()=>{
+            function bestScoreValue(){
                 if (score > bestScore) {
-                setBestscore(score)
+                    setBestscore(score)
                 } 
             }
             // let copy = field.map(f => ({ ...f }));
@@ -133,14 +129,15 @@ const closePopup=()=>{
     setIsWin(false);
     restart()
 }
+console.log('game render')
     return (<div >
-        {openPopup && <Popup text='GAME OVER'
-                                btnOnClick={onClickPlayAgain}
-                                btnValue='Play again'
-                                btnClassName={s.popupbtn}
-             />
-        }
-        {isWin &&  <Popup text='YOU WIN' closePopup={closePopup} closeSpan='x'  /> }
+            {openPopup && <Popup text='GAME OVER'
+                                    btnOnClick={onClickPlayAgain}
+                                    btnValue='Play again'
+                                    btnClassName={s.popupbtn}
+                 />
+            }
+            {isWin &&  <Popup text='YOU WIN' closePopup={closePopup} closeSpan='x'  /> }
             <div>
                 <Interface bestScore={bestScore} 
                         restartGame={restart}

@@ -35,11 +35,10 @@ function App(props) {
           <Route path='profile'>
             <Route path='' element={<Profile />} />
             <Route path=':id' element={<Profile />} />
-            {/* <Route path='update' element={<ProfileForm />} /> */}
           </Route>
           {/* <Route path='users' element={<UsersWithScroll />}  /> */}
-          <Route path='users' element={<Users isFriend='undefined' />}  />
-          <Route path='friends' element={<Users isFriend='true' />}  />
+          <Route path='users' element={<Users  isFriend='undefined' withPaginator={true}/>}  />
+          <Route path='friends' element={<Users  isFriend='true' withPaginator={false} />}  />
           <Route path='game' element={<GameContainer />}  />
           <Route path='login' element={<Login />}  />
           <Route path="*" element={<div>Not found</div>} />

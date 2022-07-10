@@ -52,6 +52,8 @@ export const authMe=(dispatch)=>{
 
 
 
+
+
 const {actions, reducer} = authSlice;
 export const {auth,setLogin, setEmail, setId,setToggle} = actions;
 export default reducer;
