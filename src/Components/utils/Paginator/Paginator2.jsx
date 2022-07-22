@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import Button from '../Button/Button';
 import s from './Paginator.module.css';
 
 
@@ -19,14 +20,16 @@ const Paginator =({itemsTotalCount, pageSize, currentPage,setCurrentPage})=>{
     for (let i = 1; i <= pagesCount; i++) {
         pages[i - 1] = { id: i, value: i } 
     }
-
     return(
     <div>
-        {portion>1 && <button onClick={()=>setPortion((prevState)=>prevState-1)}> PREV </button> }
+        {portion>1 && <Button className={s.btn} 
+                            value='PREV' 
+                            onClick={()=>setPortion((prevState)=>prevState-1)} /> }
 
         {pages.filter(i=> i.value>=(1+portion*portionSize-portionSize) && i.value<=portion*portionSize).map(p=><span className={currentPage===p.value ? s.selectedPage : undefined} key={p.id} onClick={(e)=>{dispatch(setCurrentPage(Number(e.currentTarget.innerText)))}} > {p.value} </span>)}
 
-        {portion<portionCount && <button onClick={()=>setPortion((prevState)=>prevState+1)} > NEXT </button> }
+        {portion<portionCount && <Button value='NEXT'
+                                        onClick={()=>setPortion((prevState)=>prevState+1)}  />}
     </div>
    )
 }

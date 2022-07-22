@@ -1,0 +1,12 @@
+.danger{
+    background-color: red;
+    border:5px dotted rgb(248, 143, 143);
+    color:rgb(251, 105, 105);
+    font-weight: bold;
+    border-radius: 15%;
+    font-size: 20px;
+    padding: 10px;
+}
+.blue{
+    background-color: blue;
+}

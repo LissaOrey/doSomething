@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Navigate, useParams } from 'react-router-dom';
-import { getProfile } from '../../Redux/Slices/profileSlice';
+import {  Navigate, useParams } from 'react-router-dom';
+import { getProfile, savePhoto } from '../../Redux/Slices/profileAsyncThunks';
 import s from './Profile.module.css';
 import avatar from './../Users/small.jpg';
 import Status from './Status';
 import ProfileForm from './ProfileForm';
-// import PhotoForm from './PhotoForm';
+import Popup from '../Popup/Popup';
 
+//! обработка ошибок при асинхроном коде в profileSlice
 
 const Profile = (props) => {
 
@@ -16,13 +17,15 @@ const Profile = (props) => {
    const myId = useSelector(state => state.auth.id);
    const authToggle = useSelector(state => state.auth.authToggle);
    const isAuth = useSelector(state => state.auth.isAuth);
-   const error = useSelector(state => state.auth.error);
+   const authError = useSelector(state => state.auth.error);
    const [showProfileUpdate, setShowProfileUpdate] = useState(false);
    const [isProfileUpdate, setIsProfileUpdate] = useState(false);
    const dispatch = useDispatch();
-   const profile = useSelector(state => state.profile.profile)
-   const status = useSelector(state => state.profile.status)
+   const profile = useSelector(state => state.profile.profile);
+   const status = useSelector(state => state.profile.status);
+   const profileError = useSelector(state => state.profile.error);
    let pc = profile ? profile.contacts : null;
+
 
    if (!userId && myId) {
       setUserId(myId)
@@ -32,10 +35,10 @@ const Profile = (props) => {
       setUserId(myId)
    }
 
-   if(params.id && userId=== myId){
-      setUserId(params.id)
-   }
-
+   // if(params.id && userId=== myId){ 
+   //    setUserId(params.id)
+   // }
+   
    useEffect(() => {
 
       if (isAuth && authToggle) getProfile(dispatch, userId, authToggle);
@@ -43,14 +46,10 @@ const Profile = (props) => {
       if (isProfileUpdate){
          getProfile(dispatch, userId, authToggle);
          setIsProfileUpdate(false)
-         console.log('setIsProfileUpdate')
       } 
 
    }, [userId, dispatch, authToggle, isAuth,isProfileUpdate])
 
-   useEffect(()=>{
-      // ProfileAPI.updatePhoto()
-   })
 
    function allObjKeysIsNull(object) {
       //если все контакты пусты, то не показываем их вовсе
@@ -73,25 +72,26 @@ const Profile = (props) => {
    if (!isAuth && !authToggle) {
       return <div>Loading</div>
    }
-   
    if (!profile) {
-      return error ? <div>Error: {error.message}</div>
-         : <div>Loading...</div>
+      return authError  ? <div>Error: {authError }</div>
+                        : <div>Loading...</div>
    }
-
-
-
-
-
+   const onAvatarSelected =(e)=>{
+      if(e.target.files.length){
+         savePhoto(dispatch, e.target.files[0])
+      }
+   }
    return (
       <div className={s.profileContainer}>
+          {profileError && <Popup text={profileError}
+                                   closeSpan='x'
+          />}
+        
          {showProfileUpdate ? <ProfileForm setIsProfileUpdate={setIsProfileUpdate} setShowProfileUpdate={setShowProfileUpdate} /> : 
          <div className={s.profile}>
-            {error ? <div>{error.message}</div>
+            {authError ? <div>{authError.message}</div>
                : <div>
                   {profile.userId === myId && <button onClick={()=>setShowProfileUpdate(true)} >UPDATE PROFILE</button>}
-                  {/* {profile.userId === myId && <Link to='/profile/update'>Profile </Link>} */}
-
                   {profile.fullName && <div>name: {profile.fullName}</div>}
                   {profile.userId === myId
                      ? <Status />
@@ -99,6 +99,7 @@ const Profile = (props) => {
                         ? <div>status: {status}</div>
                         : undefined}
                   {profile.photos.large ? <div><img src={profile.photos.large} alt='avatar' /></div> : <div><img src={avatar} alt='avatar' /></div>}
+                  {!params.id && <input type={'file'} onChange={onAvatarSelected} />}
                   {profile.aboutMe && <div>about me: {profile.aboutMe}</div> }
                   {profile.lookingForAJob ? <div>looking for a job: yes</div> : <div>looking for a job: no</div>}
                   {profile.lookingForAJobDescription && <div>looking for a job description: {profile.lookingForAJobDescription}</div> }
@@ -117,8 +118,6 @@ const Profile = (props) => {
                </div>}
 
          </div>}
-         <h2>PHOTO FORM</h2>
-         {/* <PhotoForm /> */}
       </div>
 
    )

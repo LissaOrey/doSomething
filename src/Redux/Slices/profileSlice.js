@@ -1,52 +1,46 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { ProfileAPI } from "../../API-AXIOS/api";
+import {updateStatus, getProfile, savePhoto} from './profileAsyncThunks';
 
 
 const profileSlice = createSlice({
     name: 'profile',
-    initialState:{
+    initialState: {
         profile: null,
         status: null,
-        statusLoaded: false,
-        error: null
+        error: null,
+        statusFetching: null,
     },
     reducers: {
-        setProfile: (state, action)=>{
+        setProfile: (state, action) => {
             state.profile = action.payload
         },
-        setStatus: (state,action)=>{
+        setStatus: (state, action) => {
             state.status = action.payload
         },
-        setStatusLoading: (state,action)=>{
-            state.statusLoaded = action.payload
-        },
-        setError: (state,action)=>{
+        setError: (state, action) => {
             state.error = action.payload;
+        },
+        savePhotoSucces: (state, action) => {
+            state.profile.photos = action.payload;
         }
-        
+
+    },
+    extraReducers: {
+        [updateStatus.pending]: (state, action) => {
+            state.statusFetching = 'loading';
+            // state.error = null;
+        },
+        [updateStatus.fulfilled]: (state, action) => {
+            state.statusFetching = 'resolved';
+        },
+        [updateStatus.rejected]: (state, action) => {
+            state.statusFetching = 'rejected';
+        },
     }
 })
-export const getProfile=(dispatch, userId, toggle)=>{
-    // if (toggle) {
-        dispatch(setProfile(null))
-        ProfileAPI.getProfile(userId).then(response => {
-           dispatch(setProfile(response.data))
-        }).catch(function (error) {
-           setError(error);
-        })
-        ProfileAPI.getStatus(userId).then(response=>{
-           dispatch(setStatus(response.data))
-        })
-    //  }
-}
-export const updateStatus=(dispatch, status)=>{
-    ProfileAPI.updateStatus(status).then(response=>{
-        if(response.data.resultCode===0){
-            dispatch(setStatus(status))
-            dispatch(setStatusLoading(false));
-        }
-    })
-}
-const {actions, reducer} = profileSlice;
-export const {setProfile,setStatus,setStatusLoading, setError} = actions;
+
+
+
+const { actions, reducer } = profileSlice;
+export const { setProfile, setStatus, setStatusLoading, setError, savePhotoSucces } = actions;
 export default reducer;

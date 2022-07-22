@@ -1,17 +1,21 @@
 import './App.css';
-import GameContainer from './Components/Game/GameContainer';
-import Users from './Components/Users/Users';
-import Profile from './Components/Profile/Profile';
 import Header from './Components/Header/Header';
 import Nav from './Components/Nav/Nav';
 import { Routes, Route } from 'react-router-dom';
-import Home from './Components/Home/Home';
-import Login from './Components/Login/Login';
 import { useDispatch, useSelector } from 'react-redux';
 import { authMe } from './Redux/Slices/authSlice';
-import { useEffect } from 'react';
+import React, {  useEffect } from 'react';
+import HomeContainer from './Components/Home/HomeContainer';
+import { withSuspense } from './hoc/withSuspense';
 // import UsersWithScroll from './Components/Users/UsersWithScroll';
-// import ProfileForm from './Components/Profile/ProfileForm';
+const Profile = React.lazy(() => import('./Components/Profile/Profile'));
+const ProfileComponent = withSuspense(Profile);
+const UsersLazy = React.lazy(() => import('./Components/Users/Users'));
+const Users = withSuspense(UsersLazy);
+const GameContainer = React.lazy(() => import('./Components/Game/GameContainer'));
+const Game = withSuspense(GameContainer);
+const LoginLazy = React.lazy(() => import('./Components/Login/Login'));
+const Login = withSuspense(LoginLazy);
 
 function App(props) {
 
@@ -31,15 +35,15 @@ function App(props) {
       <div className={'content-wrapper'}>
         
         <Routes>
-          <Route path='/' element={<Home />}  />
+          <Route path='/' element={<HomeContainer />}  />
           <Route path='profile'>
-            <Route path='' element={<Profile />} />
-            <Route path=':id' element={<Profile />} />
+            <Route path='' element={<ProfileComponent />} />
+            <Route path=':id' element={<ProfileComponent />} />
           </Route>
           {/* <Route path='users' element={<UsersWithScroll />}  /> */}
-          <Route path='users' element={<Users  isFriend='undefined' withPaginator={true}/>}  />
-          <Route path='friends' element={<Users  isFriend='true' withPaginator={false} />}  />
-          <Route path='game' element={<GameContainer />}  />
+          <Route path='users' element={<Users isFriend='undefined' />}  />
+          <Route path='friends' element={<Users  isFriend='true' />}  />
+          <Route path='game' element={<Game />}  />
           <Route path='login' element={<Login />}  />
           <Route path="*" element={<div>Not found</div>} />
         </Routes>

@@ -2,7 +2,7 @@
     position: relative;
     color: #000;
 }
-.closeSpan{
+.closeSpanBtn{
     position: fixed;
     top: 0px;
     right: 10px;
@@ -24,6 +24,9 @@
     left: 50%;
     /* -webkit-transform: translate(-50%, -50%); */
     transform: translate(-15%, 15%); 
+}
+.close{
+    display:none;
 }
 .popup p{
     margin: 0;

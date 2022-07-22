@@ -1,54 +1,8 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { UsersAPI } from "../../API-AXIOS/api";
+import { createSlice } from "@reduxjs/toolkit";
+import { fetchUsers, follow, unfollow } from "./usersAsyncThunks";
 // import userPhoto from './../../Components/Users/small.jpg'
 
-export const fetchUsers= createAsyncThunk(
-    'users/fetchUsers',
-    async function({pageSize,pageNumb,isFriend},{rejectWithValue, dispatch}){
-        try {
-            const response = await UsersAPI.getUsers(pageSize,pageNumb,isFriend);
-            dispatch(setUsers(response.data.items));
-            dispatch(setUsersCount(response.data.totalCount));
-        } catch (error) {
-            return rejectWithValue(error.message)
-        }
-    }
-)
 
-export const follow= createAsyncThunk( 
-    'users/follow',
-    async function(id,{rejectWithValue, dispatch}){
-        dispatch(addFollowingId(id));
-        try {
-            const response = await UsersAPI.follow(id)
-            if(response.data.resultCode===0){
-               dispatch(clearFollowingId(id));
-               dispatch(updateUser(id))
-            }
-        } catch (error) {
-            dispatch(clearFollowingId(id));
-
-            return rejectWithValue(error.message)
-        }
-    }
-)
-export const unfollow= createAsyncThunk( 
-    'users/unfollow',
-    async function(id,{rejectWithValue, dispatch}){
-        dispatch(addFollowingId(id));
-        try {
-            const response = await UsersAPI.unfollow(id)
-            if(response.data.resultCode===0){
-               dispatch(clearFollowingId(id));
-               dispatch(updateUser(id))
-            }
-        } catch (error) {
-            dispatch(clearFollowingId(id));
-
-            return rejectWithValue(error.message) 
-        }
-    }
-)
 
 const  setError = (state,action)=>{
     state.fetchStatus = 'rejected';
@@ -63,7 +17,6 @@ const  setFollowingStatus = (state,action)=>{
     state.followingStatus = 'loading';
     state.error = null;
 }
-
 
 const usersSlice = createSlice({
     name: 'users',

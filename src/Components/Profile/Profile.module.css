@@ -1,0 +1,18 @@
+.status{
+    /* display: inline-block;  */
+    position: relative; 
+}
+.status:hover::after{
+    /* font-weight: 100; */
+    color: black;
+    content: attr(data-title);
+    position: absolute; 
+    left: 75%; 
+    top: 0%; 
+    z-index: 1; 
+    background: rgba(255,255,230,0.9); 
+    font-family: Arial, sans-serif; 
+    font-size: 14px;
+    padding: 5px;
+    border: 1px solid #333; 
+}

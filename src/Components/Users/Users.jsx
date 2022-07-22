@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Navigate } from 'react-router-dom';
-import { useRedirect } from '../../Hooks/useRedirect';
-import { changePageNumb, fetchUsers, follow, unfollow, setUsersCount } from '../../Redux/Slices/usersSlice';
+import {  Navigate } from 'react-router-dom';
+import { changePageNumb, setUsersCount } from '../../Redux/Slices/usersSlice';
+import { fetchUsers } from '../../Redux/Slices/usersAsyncThunks';
 import Paginator from '../utils/Paginator/Paginator2';
+import User from './User';
 // import PageSlider from './../utils/Paginator/PageSlider';
 import s from './Users.module.css';
 
@@ -22,9 +23,7 @@ const Users = ({ isFriend }) => {
    const fetchStatus = useSelector(state => state.users.fetchStatus);
    const pageSize = useSelector(state => state.users.pageSize);
    const pageNumb = useSelector(state => state.users.pageNumb);
-   const userPhoto = useSelector(state => state.users.userPhoto);
    const followingStatus = useSelector(state => state.users.followingStatus);
-   const followingInProgress = useSelector(state => state.users.followingInProgress);
 
    //запрос на сервер за пользователями 
    useEffect(() => {
@@ -42,7 +41,7 @@ const Users = ({ isFriend }) => {
    if (followingStatus === 'rejected') {
       alert(error)
    }
-   console.log('render')
+
    return (
       <div className={s.usersBlock}>
 
@@ -52,32 +51,7 @@ const Users = ({ isFriend }) => {
 
          {fetchStatus === 'loading' ? <h4>Loading...</h4> :
             <div className={s.users}>
-               {users.map(u => <div className={s.user} key={u.id}>
-                  {/* <p>{u.id}</p> */}
-                  {/* <hr /> */}
-                  <Link to={'/profile/' + u.id}>
-                     <img src={u.photos.small ? u.photos.small : userPhoto} alt='avatar' width={150} />
-                  </Link>
-                  <Link to={'/profile/' + u.id}>
-                     <p>{u.name} </p>            
-                  </Link>
-                  <hr />
-                  {u.followed && isAuth && <button disabled={followingInProgress.some(item => item === u.id)}
-                     onClick={() => { dispatch(unfollow(u.id)) }} > {followingStatus === 'loading' && followingInProgress.some(item => item === u.id) ? 'LOADING...' : 'unfollow'}
-                  </button>}
-                  {!u.followed && isAuth && <button disabled={followingInProgress.some(item => item === u.id)}
-                        onClick={() => { dispatch(follow(u.id)) }} >{followingStatus === 'loading' && followingInProgress.some(item => item === u.id) ? 'LOADING...' : 'follow'}
-                     </button>
-                  }
-                  {/* {u.followed ? <button disabled={followingInProgress.some(item => item === u.id)}
-                     onClick={() => { dispatch(unfollow(u.id)) }} > {followingStatus === 'loading' && followingInProgress.some(item => item === u.id) ? 'LOADING...' : 'unfollow'}
-                  </button>
-                     : <button disabled={followingInProgress.some(item => item === u.id)}
-                        onClick={() => { dispatch(follow(u.id)) }} >{followingStatus === 'loading' && followingInProgress.some(item => item === u.id) ? 'LOADING...' : 'follow'}
-                     </button>
-                  } */}
-                  {u.status ? <p>status: {u.status}</p> : null}
-               </div>)}
+               {users.map(u=><User user={u} key={u.id} isAuth={isAuth} followingStatus={followingStatus} />)}
             </div>}
 
       </div>

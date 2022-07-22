@@ -1,6 +1,6 @@
 //координаты первых двух чисел при старте игры
 const randomCoordinates = () => {
-    let h = 4;
+    let h = 4;//число зависит о количества клеток в игровом поле
     let a = Math.floor(Math.random() * h);
     let b = Math.floor(Math.random() * h);
     let c = Math.floor(Math.random() * h);
@@ -16,6 +16,7 @@ function addRandomCoordinates(copy,k1, k2, k3, k4, x, y) {
         }
     })
 }
+
 //добавление рандомно чисел  2 или 4 на игровое поле при старте 
 
 export const startRandom = (copy, setField) => {
@@ -23,21 +24,21 @@ export const startRandom = (copy, setField) => {
     
     let randomNumber = Math.floor(Math.random() * 2);
     let [k1, k2, k3, k4] = randomCoordinates();
+
+    function hz(a,b){
+        if (k2 === k4 && k1 === k3) {
+            //start again if numbers coordinates =/ example [0][1] and [0][1] 
+            startRandom(copy, setField);
+        } 
+        addRandomCoordinates(copy, k1, k2, k3, k4, a, b)
+    }
+
     switch (randomNumber) {
         case 0:
-            if (k2 === k4 && k1 === k3) {
-                //start again if numbers coordinates =/ example [0][1] and [0][1] 
-                startRandom(copy, setField);
-            } else {
-                addRandomCoordinates(copy, k1, k2, k3, k4, 2, 4)
-            }
+            hz(2,4)
             break;
         case 1:
-            if (k2 === k4 && k1 === k3) {
-                startRandom(copy,setField);
-            } else {
-                addRandomCoordinates(copy, k1, k2, k3, k4, 2, 2)
-            }
+            hz(2,2)
             break;
         default:
             return copy;
@@ -50,7 +51,7 @@ export const startRandom = (copy, setField) => {
   
 //     let copy = field.map(f => ({ ...f }));
 //     copy.forEach(el => {
-//         el.value = '';
+//         el.value = 0;
 //     })
 //     // datas saves in startRandom function
 //     startRandom(copy,setField)

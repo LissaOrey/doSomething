@@ -3,14 +3,11 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { ProfileAPI } from '../../API-AXIOS/api';
 
-
 const ProfileForm = (props) => {
    
    const dispatch = useDispatch();
    const profile = useSelector(state => state.profile.profile)
-
-
-
+   
    const [contactsList, setContactsList] = useState([{ id: 1, n: 'facebook' }, { id: 2, n: 'github' }, { id: 3, n: 'instagram' }, { id: 4, n: 'mainLink' }, { id: 5, n: 'twitter' }, { id: 6, n: 'vk' }, { id: 7, n: 'website' }, { id: 8, n: 'youtube' }]);
 
    const {
@@ -23,13 +20,11 @@ const ProfileForm = (props) => {
       mode: 'onBlur'
    });
    const onSubmit = data => {
-      console.log(data)
-
       data.fullName = data.fullName === '' ? profile.fullName : data.fullName;
       data.aboutMe = data.aboutMe === '' ? profile.aboutMe : data.aboutMe;
       data.lookingForAJobDescription = data.lookingForAJobDescription === '' ? profile.lookingForAJobDescription : data.lookingForAJobDescription;
       data.lookingForAJob = data.lookingForAJob !== profile.lookingForAJob ? data.lookingForAJob : profile.lookingForAJob;
-
+      console.log(data.lookingForAJob)
       let dataContacts = {
          facebook: data.facebook === '' ? null : data.facebook,
          github: data.github === '' ? null : data.github,
@@ -52,12 +47,8 @@ const ProfileForm = (props) => {
             if (response.data.resultCode === 0) {
                props.setShowProfileUpdate(false);
                props.setIsProfileUpdate(true)
-               // console.log('0')
-
             } else if (response.data.resultCode === 1) {
                alert(response.data.messages)
-               // console.log('1')
-
             }
          })
       }
@@ -100,7 +91,7 @@ const ProfileForm = (props) => {
             </label></div>
             {errors?.lookingForAJobDescription && <p>{errors?.lookingForAJobDescription?.message || 'Error!'}</p>}
             <label>Looking for a job
-               <input  defaultValue={profile.lookingForAJob} type={'checkbox'} {...register('lookingForAJob', {})} />
+               <input   type={'checkbox'} {...register('lookingForAJob', {})} />
             </label>
             <div>
                <p>Contacts</p>
